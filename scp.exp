@@ -1,0 +1,25 @@
+#!/usr/bin/expect
+
+set timeout 10
+
+set host_ip [lindex $argv 0]
+set target_dir [lindex $argv 1]
+#set cur_dir [lindex $argv 2]
+set file_name [lindex $argv 2]
+
+spawn scp linaro@$host_ip:$target_dir /home/linaro/result/${file_name}.result
+#spawn scp linaro@192.168.1.125:/data/test/bmnet/test.result /home/linaro/result
+
+expect {
+"(yes/no)?"
+	{
+		send "yes\r"
+		expect "*assword:" {send "linaro\r"}
+	}
+"*assword:"
+	{
+		send "linaro\r"
+	}
+}
+
+sleep 1

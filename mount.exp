@@ -1,0 +1,16 @@
+#!/usr/bin/expect
+
+set timeout 10
+set host_ip [lindex $argv 0]
+set target_dir [lindex $argv 1]
+set cur_dir [lindex $argv 2]
+
+spawn sudo mount -t nfs $host_ip:$target_dir $cur_dir
+
+expect {
+"*bitmain*"
+	{
+		send "bitmainzeros\r"
+	}
+}
+sleep 1
